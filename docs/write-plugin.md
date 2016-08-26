@@ -4,7 +4,7 @@ Saying you want a plugin to list today's coming animes:
 
 ```js
 // use any node module you want
-const bgm = require('bgm-fetch)
+const bgm = require('bgm-fetch')
 
 module.exports = ({store}) => {
   const weekDay = new Date().getDay()
@@ -19,7 +19,7 @@ module.exports = ({store}) => {
           url: `http://bangumi.tv/subject/${item.bgmId}`
         }
       }))
-      store.dispatch('setData', items)
+      resolve(items)
     })
 }
 ```
