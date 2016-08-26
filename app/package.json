@@ -1,0 +1,16 @@
+{
+  "name": "rem",
+  "productName": "Rem",
+  "version": "0.0.0",
+  "description": "Alfred alternative for 90s.",
+  "main": "index.js",
+  "keywords": [],
+  "author": {
+    "name": "EGOIST",
+    "email": "0x142857@gmail.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "node-clipboard": "^1.2.0"
+  }
+}
