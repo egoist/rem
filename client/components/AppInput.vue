@@ -2,6 +2,8 @@
   <div class="app-input">
     <input
       type="text"
+      autofocus
+      ref="input"
       @input="handleInputWithDebounce"
       @keydown.up.prevent="handleMoveUp"
       @keydown.down.prevent="handleMoveDown"
@@ -95,6 +97,11 @@
     },
     computed: {
       ...mapGetters(['activeItem'])
+    },
+    mounted() {
+      ipcRenderer.on('focus', () => {
+        this.$refs.input.focus()
+      })
     },
     methods: {
       ...mapActions(['moveUp', 'moveDown', 'moveTo']),

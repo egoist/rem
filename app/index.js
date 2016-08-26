@@ -62,6 +62,10 @@ app.on('activate', function () {
   }
 })
 
+app.on('browser-window-focus', () => {
+  mainWindow.webContents.send('focus')
+})
+
 ipcMain.on('resize', (e, size = {}) => {
   resize(mainWindow, size)
 })
