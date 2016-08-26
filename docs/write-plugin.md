@@ -6,7 +6,7 @@ Saying you want a plugin to list today's coming animes:
 // use any node module you want
 const bgm = require('bgm-fetch')
 
-module.exports = ({store}) => {
+module.exports = (input) => {
   const weekDay = new Date().getDay()
 
   return bgm(null, {format: true})
