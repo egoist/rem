@@ -14,8 +14,11 @@
   "license": "MIT",
   "dependencies": {
     "clipboard": "^1.5.12",
+    "lodash.debounce": "^4.0.8",
     "lodash.find": "^4.6.0",
     "opn": "^4.0.2",
+    "perfect-scrollbar": "^0.6.12",
+    "switchy": "^0.1.0",
     "vue": "^2.0.0-rc.1",
     "vuex": "^2.0.0-rc.4"
   },

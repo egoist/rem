@@ -1,15 +1,20 @@
 <template>
   <div id="app">
     <app-input></app-input>
-    <app-main></app-main>
+    <app-main v-if="showMain"></app-main>
   </div>
 </template>
 
 <script>
+  import {mapGetters} from 'vuex'
+
   import AppInput from 'components/AppInput'
   import AppMain from 'components/AppMain'
 
   export default {
+    computed: {
+      ...mapGetters(['showMain'])
+    },
     components: {
       AppInput,
       AppMain

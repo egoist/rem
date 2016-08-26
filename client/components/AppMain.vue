@@ -1,9 +1,10 @@
 <template>
   <div class="app-main">
-    <div class="items" v-show="items.length > 0">
+    <div class="items" v-show="items.length > 0" ref="container">
       <div
         class="item"
-        :class="{active: active === index}"
+        @click="handleItemClick(index, item.action)"
+        :class="{active: activeItemIndex === index}"
         v-for="(item, index) in items">
         <div class="item-icon"></div>
         <div class="item-main">
@@ -16,8 +17,10 @@
 </template>
 
 <script>
-  import {mapGetters} from 'vuex'
+  import {mapGetters, mapActions} from 'vuex'
+  import Ps from 'perfect-scrollbar'
   import {$} from 'utils/dom'
+  import handleAction from 'utils/handle-action'
   
   export default {
     data() {
@@ -26,59 +29,46 @@
       }
     },
     computed: {
-      ...mapGetters(['items'])
+      ...mapGetters(['items', 'activeItemIndex'])
     },
     mounted() {
-      document.addEventListener('keydown', e => {
-        if (e.code === 'ArrowDown') {
-          this.moveDown()
-        } else if (e.code === 'ArrowUp') {
-          this.moveUp()
-        }
-      }, false)
+      Ps.initialize(this.$refs.container)
     },
     methods: {
-      moveDown() {
-        if (this.active === this.items.length - 1) {
-          this.active = 0
-        } else {
-          this.active++
-        }
-        this.$nextTick(() => {
-          $('.item.active').scrollIntoViewIfNeeded()
-        })
+      ...mapActions(['moveTo']),
+      updateScrollBar() {
+        Ps.update(this.$refs.container)
       },
-      moveUp() {
-        if (this.active === 0) {
-          this.active = this.items.length - 1
-        } else {
-          this.active--
-        }
+      handleItemClick(index, action) {
+        this.moveTo(index)
+        handleAction(action)
+      }
+    },
+    watch: {
+      items() {
         this.$nextTick(() => {
-          $('.item.active').scrollIntoViewIfNeeded()
+          this.updateScrollBar()
         })
       }
+    },
+    beforeDestroy() {
+      Ps.destroy(this.$refs.container)
     }
   }
 </script>
 
+<style src="perfect-scrollbar/dist/css/perfect-scrollbar.css"></style>
 <style>
   .app-main {
     background-color: white;
+    overflow: hidden;
   }
   .items {
-    overflow: auto;
     max-height: calc(70px * 5);
+    position: relative;
 
-    &::-webkit-scrollbar {
-      background-color: transparent;
-      width: 4px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background-color: #ccc;
-      border-radius: 0;
-      border: 0;
+    .ps-scrollbar-y-rail {
+      opacity: 0.6;
     }
   }
   .item {
